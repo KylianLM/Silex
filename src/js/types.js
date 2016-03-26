@@ -34,6 +34,7 @@ goog.require('silex.controller.TextEditorController');
 goog.require('silex.controller.ToolMenuController');
 goog.require('silex.controller.ViewMenuController');
 goog.require('silex.controller.ContextMenuController');
+goog.require('silex.controller.WidgetController');
 
 
 
@@ -123,6 +124,7 @@ silex.types.Controller = function() {
  * @param {silex.controller.CssEditorController} cssEditorController
  * @param {silex.controller.JsEditorController} jsEditorController
  * @param {silex.controller.TextEditorController} textEditorController
+ * @param {silex.controller.WidgetController} widgetController
  */
 silex.types.Controller.prototype.init = function(
     fileMenuController,
@@ -138,7 +140,8 @@ silex.types.Controller.prototype.init = function(
     htmlEditorController,
     cssEditorController,
     jsEditorController,
-    textEditorController)
+    textEditorController,
+    widgetController)
     {
   /**
    * @type {silex.controller.FileMenuController}
@@ -196,6 +199,10 @@ silex.types.Controller.prototype.init = function(
    * @type {silex.controller.TextEditorController}
    */
   this.textEditorController = textEditorController;
+  /**
+   * @type {silex.controller.WidgetController}
+   */
+  this.widgetController = widgetController;
 };
 
 

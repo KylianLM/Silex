@@ -266,6 +266,9 @@ silex.view.Menu.prototype.onMenuEvent = function(type) {
     case 'insert.html':
       this.controller.insertMenuController.addElement(silex.model.Element.TYPE_HTML);
       break;
+    case 'insert.widget':
+      this.controller.widgetController.openWidgets();
+      break;
     case 'insert.image':
       this.controller.insertMenuController.browseAndAddImage();
       break;

@@ -444,6 +444,16 @@ silex.Config.menu = {
         mnemonic: goog.events.KeyCodes.H,
         accelerator: 'h'
       },
+      {
+        label: 'Widgets',
+        id: 'insert.widget',
+        className: 'menu-item-widget',
+        globalKey: goog.events.KeyCodes.M,
+        shortcut: [[goog.events.KeyCodes.M, altKeyModifyer]],
+        tooltip: altKeyDisplay + 'M',
+        mnemonic: goog.events.KeyCodes.M,
+        accelerator: 'm'
+      },
       null,
       {
         label: 'New page',

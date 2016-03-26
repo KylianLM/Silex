@@ -42,6 +42,7 @@ goog.require('silex.controller.TextEditorController');
 goog.require('silex.controller.ToolMenuController');
 goog.require('silex.controller.ViewMenuController');
 goog.require('silex.controller.ContextMenuController');
+goog.require('silex.controller.WidgetController')
 goog.require('silex.model.Property');
 goog.require('silex.model.Element');
 goog.require('silex.model.Body');
@@ -302,7 +303,8 @@ class App {
         new silex.controller.HtmlEditorController(this.model, this.view),
         new silex.controller.CssEditorController(this.model, this.view),
         new silex.controller.JsEditorController(this.model, this.view),
-        new silex.controller.TextEditorController(this.model, this.view)
+        new silex.controller.TextEditorController(this.model, this.view),
+        new silex.controller.WidgetController(this.model, this.view)
     );
   }
 }
@@ -316,4 +318,3 @@ goog.exportSymbol('silex.App', App);
 // This fixes this issue: https://codereview.appspot.com/6115045/patch/1/2
 // @see dist/client/js/closure-patches.js
 goog.exportSymbol('goog.style', goog.style);
-
