@@ -1,24 +1,24 @@
 /**
- * @preserve
- * Silex, live web creation
- * http://projects.silexlabs.org/?/silex/
- *
- * Copyright (c) 2012 Silex Labs
- * http://www.silexlabs.org/
- *
- * Silex is available under the GPL license
- * http://www.silexlabs.org/silex/silex-licensing/
- */
+* @preserve
+* Silex, live web creation
+* http://projects.silexlabs.org/?/silex/
+*
+* Copyright (c) 2012 Silex Labs
+* http://www.silexlabs.org/
+*
+* Silex is available under the GPL license
+* http://www.silexlabs.org/silex/silex-licensing/
+*/
 
 
 /**
- * @fileoverview This file defines the entry point of Silex
- *
- * a view holds a reference to the controllers so that it can order changes on the models
- * a controller holds a reference to the models so that it can change them
- * a model holds a reference to the views so that it can update them
- *
- */
+* @fileoverview This file defines the entry point of Silex
+*
+* a view holds a reference to the controllers so that it can order changes on the models
+* a controller holds a reference to the models so that it can change them
+* a model holds a reference to the views so that it can update them
+*
+*/
 
 goog.provide('silex.App');
 
@@ -74,22 +74,23 @@ goog.require('silex.view.dialog.HtmlEditor');
 goog.require('silex.view.dialog.JsEditor');
 goog.require('silex.view.dialog.SettingsDialog');
 goog.require('silex.view.dialog.TextEditor');
+goog.require('silex.view.dialog.WidgetDialog');
 
 
 
 /**
- * Defines the entry point of Silex client application
- *
- */
+* Defines the entry point of Silex client application
+*
+*/
 class App {
 
 
   /**
-   * Entry point of Silex client application
-   * create all views and models and controllers
-   * @constructor
-   *
-   */
+  * Entry point of Silex client application
+  * create all views and models and controllers
+  * @constructor
+  *
+  */
   constructor() {
 
     // **
@@ -102,26 +103,26 @@ class App {
     silex.utils.Polyfills.init();
 
     /**
-     * store the model instances
-     * the model instances are passed to the controllers and the views
-     * @type {!silex.types.Model}
-     */
+    * store the model instances
+    * the model instances are passed to the controllers and the views
+    * @type {!silex.types.Model}
+    */
     this.model = new silex.types.Model();
 
 
     /**
-     * store the view instances
-     * the view instaces have access to the models and controllers
-     * @type {!silex.types.View}
-     */
+    * store the view instances
+    * the view instaces have access to the models and controllers
+    * @type {!silex.types.View}
+    */
     this.view = new silex.types.View();
 
 
     /**
-     * store the controller instances
-     * controller instances have access to the views and the models
-     * @type {!silex.types.Controller}
-     */
+    * store the controller instances
+    * controller instances have access to the views and the models
+    * @type {!silex.types.Controller}
+    */
     this.controller = new silex.types.Controller();
 
 
@@ -141,13 +142,14 @@ class App {
     this.view.jsEditor.buildUi();
     this.view.textEditor.buildUi();
     this.view.settingsDialog.buildUi();
+    this.view.widgetDialog.buildUi();
     this.view.propertyTool.buildUi();
 
 
     // warning when IE
     if (navigator.appName === 'Microsoft Internet Explorer' || (navigator.appName === 'Netscape' && navigator.userAgent.indexOf('Trident') >= 0)) {
       silex.utils.Notification.alert('Your browser is not supported yet.<br>Considere using chrome or firefox instead of Internet Explorer.',
-          goog.bind(function() {}, this));
+      goog.bind(function() {}, this));
     }
 
     // draw the workspace once
@@ -173,8 +175,8 @@ class App {
 
 
   /**
-   * creation of the view instances
-   */
+  * creation of the view instances
+  */
   initView() {
     // Stage
     var stageElement = /** @type {!Element} */ (goog.dom.getElementByClass('silex-stage'));
@@ -226,6 +228,11 @@ class App {
     /** @type {silex.view.dialog.FileExplorer} */
     var fileExplorer = new silex.view.dialog.FileExplorer(fileExplorerElement, this.model, this.controller);
 
+    // WidgetDialog
+    var widgetDialogElement = /** @type {!Element} */ (goog.dom.getElementByClass('silex-widget-dialog'));
+    /** @type {silex.view.dialog.WidgetDialog} */
+    var widgetDialog = new silex.view.dialog.WidgetDialog(widgetDialogElement, this.model, this.controller);
+
     // PropertyTool
     var propertyToolElement = /** @type {!Element} */ (goog.dom.getElementByClass('silex-property-tool'));
     /** @type {silex.view.PropertyTool} */
@@ -251,60 +258,61 @@ class App {
 
     // init the view class which references all the views
     this.view.init(
-        menu,
-        contextMenu,
-        stage,
-        pageTool,
-        propertyTool,
-        htmlEditor,
-        cssEditor,
-        jsEditor,
-        textEditor,
-        fileExplorer,
-        settingsDialog,
-        propSplitter,
-        workspace
+      menu,
+      contextMenu,
+      stage,
+      pageTool,
+      propertyTool,
+      htmlEditor,
+      cssEditor,
+      jsEditor,
+      textEditor,
+      fileExplorer,
+      settingsDialog,
+      widgetDialog,
+      propSplitter,
+      workspace
     );
   }
 
 
   /**
-   * creation of the model classes
-   * create the models to be passed to the controllers and the views
-   */
+  * creation of the model classes
+  * create the models to be passed to the controllers and the views
+  */
   initModel() {
     // init the model class which references all the views
     this.model.init(
-        new silex.model.File(this.model, this.view),
-        new silex.model.Head(this.model, this.view),
-        new silex.model.Body(this.model, this.view),
-        new silex.model.Page(this.model, this.view),
-        new silex.model.Element(this.model, this.view),
-        new silex.model.Property(this.model, this.view)
+      new silex.model.File(this.model, this.view),
+      new silex.model.Head(this.model, this.view),
+      new silex.model.Body(this.model, this.view),
+      new silex.model.Page(this.model, this.view),
+      new silex.model.Element(this.model, this.view),
+      new silex.model.Property(this.model, this.view)
     );
   }
 
 
   /**
-   * init the controller class with references to the views and the models
-   */
+  * init the controller class with references to the views and the models
+  */
   initController() {
     this.controller.init(
-        new silex.controller.FileMenuController(this.model, this.view),
-        new silex.controller.EditMenuController(this.model, this.view),
-        new silex.controller.ViewMenuController(this.model, this.view),
-        new silex.controller.InsertMenuController(this.model, this.view),
-        new silex.controller.ToolMenuController(this.model, this.view),
-        new silex.controller.ContextMenuController(this.model, this.view),
-        new silex.controller.StageController(this.model, this.view),
-        new silex.controller.PageToolController(this.model, this.view),
-        new silex.controller.PropertyToolController(this.model, this.view),
-        new silex.controller.SettingsDialogController(this.model, this.view),
-        new silex.controller.HtmlEditorController(this.model, this.view),
-        new silex.controller.CssEditorController(this.model, this.view),
-        new silex.controller.JsEditorController(this.model, this.view),
-        new silex.controller.TextEditorController(this.model, this.view),
-        new silex.controller.WidgetController(this.model, this.view)
+      new silex.controller.FileMenuController(this.model, this.view),
+      new silex.controller.EditMenuController(this.model, this.view),
+      new silex.controller.ViewMenuController(this.model, this.view),
+      new silex.controller.InsertMenuController(this.model, this.view),
+      new silex.controller.ToolMenuController(this.model, this.view),
+      new silex.controller.ContextMenuController(this.model, this.view),
+      new silex.controller.StageController(this.model, this.view),
+      new silex.controller.PageToolController(this.model, this.view),
+      new silex.controller.PropertyToolController(this.model, this.view),
+      new silex.controller.SettingsDialogController(this.model, this.view),
+      new silex.controller.HtmlEditorController(this.model, this.view),
+      new silex.controller.CssEditorController(this.model, this.view),
+      new silex.controller.JsEditorController(this.model, this.view),
+      new silex.controller.TextEditorController(this.model, this.view),
+      new silex.controller.WidgetController(this.model, this.view)
     );
   }
 }

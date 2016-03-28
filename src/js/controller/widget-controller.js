@@ -36,5 +36,6 @@
   * Open Widgets Interface
   */
   silex.controller.WidgetController.prototype.openWidgets = function() {
-    console.log('Call Widget Controller');
+    // undo checkpoint
+    this.undoCheckPoint();
   };
