@@ -50,7 +50,7 @@
   right: @dialog-margin;
 }
 /* but hide the background with display none */
-.dialogs-background, .settings-background {
+.dialogs-background, .settings-background, .widget-dialog {
   .hidden-background;
 }
 
@@ -95,8 +95,17 @@
     .visible-background;
   }
 }
+.widget-dialog-opened {
+  .silex-widget-manage {
+    .visible-dialog;
+  }
+  .dialogs-background {
+    .visible-background;
+  }
+}
 /* dock css editor */
 .dock-editors.settings-editor-opened,
+.dock-editors.widget-dialog-opened,
 .dock-editors.text-editor-opened{
   .dialogs-background{
     .visible-background;
@@ -124,4 +133,3 @@
   bottom: 0;
   overflow: hidden;
 }
-

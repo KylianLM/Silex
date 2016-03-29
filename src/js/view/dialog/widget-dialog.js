@@ -48,3 +48,33 @@ silex.view.dialog.WidgetDialog.prototype.buildUi = function() {
   // call super
   goog.base(this, 'buildUi');
 };
+
+/**
+ * open settings dialog
+ * @param {?function()=} opt_cbk   callback to be called when the user closes the dialog
+ */
+silex.view.dialog.WidgetDialog.prototype.openDialog = function(opt_cbk) {
+  this.onClose = opt_cbk;
+  this.openEditor();
+};
+
+/**
+ * Open the editor
+ */
+silex.view.dialog.WidgetDialog.prototype.openEditor = function() {
+  // call super
+  goog.base(this, 'openEditor');
+};
+
+/**
+ * close editor
+ * this is private method, do not call it
+ */
+silex.view.dialog.WidgetDialog.prototype.closeEditor = function() {
+  // call super
+  goog.base(this, 'closeEditor');
+  // notify caller
+  if (this.onClose) {
+    this.onClose();
+  }
+};
